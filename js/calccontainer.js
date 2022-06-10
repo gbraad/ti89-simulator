@@ -1234,7 +1234,7 @@ $(function() {
     emu.initemu();
     progress_bar.css('width', (v12_loading_percent + (100 - v12_loading_percent) * 80 / 100) + '%');
     $('#calccontainer #calcback').css('display', "block");
-    $('#calccontainer #calcsceen').css('display', "block");
+    $('#calccontainer #calcscreen').css('display', "block");
     var per = v12_loading_percent + (100 - v12_loading_percent) * 80 / 100;
     var timer = setInterval(function () {
       progress_bar.css('width', per + '%');
@@ -1881,10 +1881,10 @@ $(function() {
   document.addEventListener('touchmove', onTouchMove);
 
   document.addEventListener('keydown', (event) => {
-      startUT();
+      //startUT();
   });
   document.addEventListener('keyup', (event) => {
-      startUT();
+      //startUT();
   });
 
   var uT = 0;
