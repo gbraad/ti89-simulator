@@ -1,0 +1,247 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <base href="/">
+    <title>TI-89 Online Simulator</title>
+    <meta name="keywords" content="TI-89,Simulator,calculator">
+    <meta name="description"
+          content="Use a TI-89 online with your Desktop, Tablet, or Mobile. Utilize web-based convenience by having access to a TI-89 online at any moment with the device of your choosing.">
+    <meta name="viewport" content="width=device-width, user-scalable=no">
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta http-equiv="Content-Language" content="en-US">
+
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link href="css/keyboard.css" rel="stylesheet">
+
+    <script src="js/jquery.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+</head>
+<body onload="bodyOnload()">
+    <div>
+        <div id="background-left" class="hidden-s"></div>
+        <div id="background-center"></div>
+        <div id="background-right" class="hidden-s"></div>
+    </div>
+    <div id="calccontainer" style="position:relative">
+        <canvas height="100" width="160" id="screen" style="display: none">This website requires a browser with canvas
+            support and Javascript enabled.
+        </canvas>
+        <div id="calcback"></div>
+        <div id="calcsceen"></div>
+        <img style="display: none" usemap="#calcmap" src="img/Device.svg" id="calcimg">
+        <img style="display: none" usemap="#calcmap" src="img/Device-90.svg" id="calcimg2">
+        <map id="calcmap" name="calcmap">
+        </map>
+    </div>
+    <div id="textandbuttons" style="display: none">
+        <form>
+            <input checked="checked" id="smallskin" name="skin_type" value="1" onclick="javascript:ui.setSkin(1)"
+                   type="radio">1:1&nbsp;&nbsp;
+            <input id="largeskin" name="skin_type" value="2" onclick="javascript:ui.setSkin(2)" type="radio">2:1
+            <input id="xlargeskin" name="skin_type" value="3" onclick="javascript:ui.setSkin(3)" type="radio">3:1
+            <input id="xxlargeskin" name="skin_type" value="4" onclick="javascript:ui.setSkin(4)" type="radio">4:1
+        </form>
+    </div>
+    <div id="fnbuttonscontainer">
+        <div id="fnbuttonsarea">
+            <div class="fnbuttons" id="f1button"></div>
+            <div class="fnbuttons" id="f2button"></div>
+            <div class="fnbuttons" id="f3button"></div>
+            <div class="fnbuttons" id="f4button"></div>
+            <div class="fnbuttons" id="f5button"></div>
+        </div>
+        <div id="fnpressedcontainer">
+            <img class="keyimgs" src="img/keyboard/pressed/f1.svg" id="f1pressedimg">
+            <img class="keyimgs" src="img/keyboard/pressed/f2.svg" id="f2pressedimg">
+            <img class="keyimgs" src="img/keyboard/pressed/f3.svg" id="f3pressedimg">
+            <img class="keyimgs" src="img/keyboard/pressed/f4.svg" id="f4pressedimg">
+            <img class="keyimgs" src="img/keyboard/pressed/f5.svg" id="f5pressedimg">
+        </div>
+    </div>
+    <div id="adjustbar" style="display: none"></div>
+    <div class="tooltip fade top in" role="tooltip" id="adjustbartooltip">
+        <div class="tooltip-arrow" style="left: 50%;"></div>
+        <div class="tooltip-inner">
+            <p>Drag here to adjust keyboard size</p>
+            <p>Drag all the way &#8593;: switch screens</p>
+            <p class="hidden-s">Drag all the way &#8595;: switch keyboard</p>
+        </div>
+    </div>
+    <div id="progressbar">
+        <div></div>
+    </div>
+    <div id="keyboardcontainer" style="display: none">
+        <div id="buttonscontainer">
+            <img class="keyimgs" src="img/keyboard/buttons/2nd.svg" id="2ndbuttonimg">
+            <img class="keyimgs" src="img/keyboard/buttons/arrow_up.svg" id="arrowupbuttonimg">
+            <img class="keyimgs" src="img/keyboard/buttons/esc.svg" id="escbuttonimg">
+            <img class="keyimgs" src="img/keyboard/buttons/yellow.svg" id="yellowbuttonimg">
+            <img class="keyimgs" src="img/keyboard/buttons/alpha.svg" id="alphabuttonimg">
+            <img class="keyimgs" src="img/keyboard/buttons/apps.svg" id="appsbuttonimg">
+            <img class="keyimgs" src="img/keyboard/buttons/key_left.svg" id="keyleftbuttonimg">
+            <img class="keyimgs" src="img/keyboard/buttons/key_up.svg" id="keyupbuttonimg">
+            <img class="keyimgs" src="img/keyboard/buttons/key_down.svg" id="keydownbuttonimg">
+            <img class="keyimgs" src="img/keyboard/buttons/key_right.svg" id="keyrightbuttonimg">
+            <img class="keyimgs" src="img/keyboard/buttons/home.svg" id="homebuttonimg">
+            <img class="keyimgs" src="img/keyboard/buttons/mode.svg" id="modebuttonimg">
+            <img class="keyimgs" src="img/keyboard/buttons/catalog.svg" id="catalogbuttonimg">
+            <img class="keyimgs" src="img/keyboard/buttons/arrow.svg" id="arrowbuttonimg">
+            <img class="keyimgs" src="img/keyboard/buttons/clear.svg" id="clearbuttonimg">
+            <img class="keyimgs" src="img/keyboard/buttons/x.svg" id="xbuttonimg">
+            <img class="keyimgs" src="img/keyboard/buttons/y.svg" id="ybuttonimg">
+            <img class="keyimgs" src="img/keyboard/buttons/z.svg" id="zbuttonimg">
+            <img class="keyimgs" src="img/keyboard/buttons/t.svg" id="tbuttonimg">
+            <img class="keyimgs" src="img/keyboard/buttons/up.svg" id="upbuttonimg">
+            <img class="keyimgs" src="img/keyboard/buttons/=.svg" id="equalbuttonimg">
+            <img class="keyimgs" src="img/keyboard/buttons/(.svg" id="leftparenthesesbuttonimg">
+            <img class="keyimgs" src="img/keyboard/buttons/).svg" id="rightparenthesesbuttonimg">
+            <img class="keyimgs" src="img/keyboard/buttons/comma.svg" id="commabuttonimg">
+            <img class="keyimgs" src="img/keyboard/buttons/divide.svg" id="dividebuttonimg">
+            <img class="keyimgs" src="img/keyboard/buttons/vertical_line.svg" id="verticalbuttonimg">
+            <img class="keyimgs" src="img/keyboard/buttons/7.svg" id="7buttonimg">
+            <img class="keyimgs" src="img/keyboard/buttons/8.svg" id="8buttonimg">
+            <img class="keyimgs" src="img/keyboard/buttons/9.svg" id="9buttonimg">
+            <img class="keyimgs" src="img/keyboard/buttons/multiply.svg" id="multiplybuttonimg">
+            <img class="keyimgs" src="img/keyboard/buttons/ee.svg" id="eebuttonimg">
+            <img class="keyimgs" src="img/keyboard/buttons/4.svg" id="4buttonimg">
+            <img class="keyimgs" src="img/keyboard/buttons/5.svg" id="5buttonimg">
+            <img class="keyimgs" src="img/keyboard/buttons/6.svg" id="6buttonimg">
+            <img class="keyimgs" src="img/keyboard/buttons/-.svg" id="minusbuttonimg">
+            <img class="keyimgs" src="img/keyboard/buttons/sto.svg" id="stobuttonimg">
+            <img class="keyimgs" src="img/keyboard/buttons/1.svg" id="1buttonimg">
+            <img class="keyimgs" src="img/keyboard/buttons/2.svg" id="2buttonimg">
+            <img class="keyimgs" src="img/keyboard/buttons/3.svg" id="3buttonimg">
+            <img class="keyimgs" src="img/keyboard/buttons/plus.svg" id="plusbuttonimg">
+            <img class="keyimgs" src="img/keyboard/buttons/on.svg" id="onbuttonimg">
+            <img class="keyimgs" src="img/keyboard/buttons/0.svg" id="0buttonimg">
+            <img class="keyimgs" src="img/keyboard/buttons/dot.svg" id="dotbuttonimg">
+            <img class="keyimgs" src="img/keyboard/buttons/(-).svg" id="complexminusbuttonimg">
+            <img class="keyimgs" src="img/keyboard/buttons/enter.svg" id="enterbuttonimg">
+        </div>
+        <div id="buttonsarea">
+            <div class="keybuttons" id="2ndbutton"></div>
+            <div class="keybuttons" id="arrowupbutton"></div>
+            <div class="keybuttons" id="escbutton"></div>
+            <div class="keybuttons" id="yellowbutton"></div>
+            <div class="keybuttons" id="alphabutton"></div>
+            <div class="keybuttons" id="appsbutton"></div>
+            <div class="keybuttons" id="keyleftbutton"></div>
+            <div class="keybuttons" id="keyupbutton"></div>
+            <div class="keybuttons" id="keydownbutton"></div>
+            <div class="keybuttons" id="keyrightbutton"></div>
+            <div class="keybuttons" id="homebutton"></div>
+            <div class="keybuttons" id="modebutton"></div>
+            <div class="keybuttons" id="catalogbutton"></div>
+            <div class="keybuttons" id="arrowbutton"></div>
+            <div class="keybuttons" id="clearbutton"></div>
+            <div class="keybuttons" id="xbutton"></div>
+            <div class="keybuttons" id="ybutton"></div>
+            <div class="keybuttons" id="zbutton"></div>
+            <div class="keybuttons" id="tbutton"></div>
+            <div class="keybuttons" id="upbutton"></div>
+            <div class="keybuttons" id="equalbutton"></div>
+            <div class="keybuttons" id="leftparenthesesbutton"></div>
+            <div class="keybuttons" id="rightparenthesesbutton"></div>
+            <div class="keybuttons" id="commabutton"></div>
+            <div class="keybuttons" id="dividebutton"></div>
+            <div class="keybuttons" id="verticalbutton"></div>
+            <div class="keybuttons" id="7button"></div>
+            <div class="keybuttons" id="8button"></div>
+            <div class="keybuttons" id="9button"></div>
+            <div class="keybuttons" id="multiplybutton"></div>
+            <div class="keybuttons" id="eebutton"></div>
+            <div class="keybuttons" id="4button"></div>
+            <div class="keybuttons" id="5button"></div>
+            <div class="keybuttons" id="6button"></div>
+            <div class="keybuttons" id="minusbutton"></div>
+            <div class="keybuttons" id="stobutton"></div>
+            <div class="keybuttons" id="1button"></div>
+            <div class="keybuttons" id="2button"></div>
+            <div class="keybuttons" id="3button"></div>
+            <div class="keybuttons" id="plusbutton"></div>
+            <div class="keybuttons" id="onbutton"></div>
+            <div class="keybuttons" id="0button"></div>
+            <div class="keybuttons" id="dotbutton"></div>
+            <div class="keybuttons" id="complexminusbutton"></div>
+            <div class="keybuttons" id="enterbutton"></div>
+        </div>
+        <div id="pressedcontainer">
+            <img class="keyimgs" src="img/keyboard/pressed/2nd.svg" id="2ndpressedimg">
+            <img class="keyimgs" src="img/keyboard/pressed/arrow_up.svg" id="arrowuppressedimg">
+            <img class="keyimgs" src="img/keyboard/pressed/esc.svg" id="escpressedimg">
+            <img class="keyimgs" src="img/keyboard/pressed/yellow.svg" id="yellowpressedimg">
+            <img class="keyimgs" src="img/keyboard/pressed/alpha.svg" id="alphapressedimg">
+            <img class="keyimgs" src="img/keyboard/pressed/apps.svg" id="appspressedimg">
+            <img class="keyimgs" src="img/keyboard/pressed/key_left.svg" id="keyleftpressedimg">
+            <img class="keyimgs" src="img/keyboard/pressed/key_up.svg" id="keyuppressedimg">
+            <img class="keyimgs" src="img/keyboard/pressed/key_down.svg" id="keydownpressedimg">
+            <img class="keyimgs" src="img/keyboard/pressed/key_right.svg" id="keyrightpressedimg">
+            <img class="keyimgs" src="img/keyboard/pressed/home.svg" id="homepressedimg">
+            <img class="keyimgs" src="img/keyboard/pressed/mode.svg" id="modepressedimg">
+            <img class="keyimgs" src="img/keyboard/pressed/catalog.svg" id="catalogpressedimg">
+            <img class="keyimgs" src="img/keyboard/pressed/arrow.svg" id="arrowpressedimg">
+            <img class="keyimgs" src="img/keyboard/pressed/clear.svg" id="clearpressedimg">
+            <img class="keyimgs" src="img/keyboard/pressed/x.svg" id="xpressedimg">
+            <img class="keyimgs" src="img/keyboard/pressed/y.svg" id="ypressedimg">
+            <img class="keyimgs" src="img/keyboard/pressed/z.svg" id="zpressedimg">
+            <img class="keyimgs" src="img/keyboard/pressed/t.svg" id="tpressedimg">
+            <img class="keyimgs" src="img/keyboard/pressed/up.svg" id="uppressedimg">
+            <img class="keyimgs" src="img/keyboard/pressed/=.svg" id="equalpressedimg">
+            <img class="keyimgs" src="img/keyboard/pressed/(.svg" id="leftparenthesespressedimg">
+            <img class="keyimgs" src="img/keyboard/pressed/).svg" id="rightparenthesespressedimg">
+            <img class="keyimgs" src="img/keyboard/pressed/comma.svg" id="commapressedimg">
+            <img class="keyimgs" src="img/keyboard/pressed/divide.svg" id="dividepressedimg">
+            <img class="keyimgs" src="img/keyboard/pressed/vertical_line.svg" id="verticalpressedimg">
+            <img class="keyimgs" src="img/keyboard/pressed/7.svg" id="7pressedimg">
+            <img class="keyimgs" src="img/keyboard/pressed/8.svg" id="8pressedimg">
+            <img class="keyimgs" src="img/keyboard/pressed/9.svg" id="9pressedimg">
+            <img class="keyimgs" src="img/keyboard/pressed/multiply.svg" id="multiplypressedimg">
+            <img class="keyimgs" src="img/keyboard/pressed/ee.svg" id="eepressedimg">
+            <img class="keyimgs" src="img/keyboard/pressed/4.svg" id="4pressedimg">
+            <img class="keyimgs" src="img/keyboard/pressed/5.svg" id="5pressedimg">
+            <img class="keyimgs" src="img/keyboard/pressed/6.svg" id="6pressedimg">
+            <img class="keyimgs" src="img/keyboard/pressed/-.svg" id="minuspressedimg">
+            <img class="keyimgs" src="img/keyboard/pressed/sto.svg" id="stopressedimg">
+            <img class="keyimgs" src="img/keyboard/pressed/1.svg" id="1pressedimg">
+            <img class="keyimgs" src="img/keyboard/pressed/2.svg" id="2pressedimg">
+            <img class="keyimgs" src="img/keyboard/pressed/3.svg" id="3pressedimg">
+            <img class="keyimgs" src="img/keyboard/pressed/plus.svg" id="pluspressedimg">
+            <img class="keyimgs" src="img/keyboard/pressed/on.svg" id="onpressedimg">
+            <img class="keyimgs" src="img/keyboard/pressed/0.svg" id="0pressedimg">
+            <img class="keyimgs" src="img/keyboard/pressed/dot.svg" id="dotpressedimg">
+            <img class="keyimgs" src="img/keyboard/pressed/(-).svg" id="complexminuspressedimg">
+            <img class="keyimgs" src="img/keyboard/pressed/enter.svg" id="enterpressedimg">
+        </div>
+    </div>
+    <div class="tooltip fade top in" role="tooltip" id="disclaimertooltip">
+        <div class="tooltip-arrow" style="left: 50%;"></div>
+        <div class="tooltip-inner">
+            <p class="hidden-s">Click anywhere</p>
+            <p class="hidden-s"> to close</p>
+            <p class="visible-s">Tap anywhere to close</p>
+        </div>
+    </div>
+    <div id="disclaimer">
+        <div id="disclaimer-content">
+            <p>TI-89 responsive fork of JavaScript TI-68k (89, 92+, V200, 89T) graphing calculator emulator</p>
+            <br>
+            <p>Open-source PedroM instead of the official TI system software is used in this calculator. This fork continues
+                with the GNU License of the origional project.
+                The PedroM source is available at https://tiplanet.org/emu68k_fork/</p>
+            <br>
+            Credit for JavaScript TI-68k emulator goes to:<br>
+            Copyright &copy 2011-2013 Patrick "PatrickD" Davidson (v1-v11) - http://www.ocf.berkeley.edu/~pad/emu/<br>
+            Copyright &copy 2012-2014 Lionel Debroux (v11-v12) - https://tiplanet.org/emu68k_fork/<br>
+            Copyright &copy 2012-2013 Xavier "critor" Andréani<br>
+            Copyright &copy 2012-2013 Adrien "Adriweb" Bertrand<br>
+            Copyright &copy 2019 Emmanuel "Acksop" Roy - https://github.com/Acksop
+            <br>
+            <br>
+            <center>If you have any questions: info@ti89-simulator.com</center>
+        </div>
+    </div>
+    <script type="text/javascript" src="" id="simulator"></script>
+    <script type="text/javascript" src="js/calccontainer.js"></script>
+</body>
+</html>
