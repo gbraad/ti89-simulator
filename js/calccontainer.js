@@ -1781,7 +1781,7 @@ $(function() {
     $('#progressbar').css('display', 'block');
   }
   displayElements();
-  downloadV12MV12();
+  loadSimulator();
   function mapKeyboardButton(btnid, key, imgid) {
     var button_el = document.getElementById(btnid);
     var image_el = document.getElementById(imgid);
