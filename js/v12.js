@@ -8673,11 +8673,11 @@ function TI68kEmulatorUIModule(stdlib) {
 	{
 		if (emu.hardware_model() == 1) {
 			// TODO: modify both black_color and white_color.
-			//black_color = white_color - 5 * contrast;
+			black_color = white_color - 5 * contrast;
 		}
 		else {
 			// TODO: modify both black_color and white_color.
-			//black_color = (2 * white_color - 5 * contrast) >> 1;
+			black_color = (2 * white_color - 5 * contrast) >> 1;
 		}
 	}
 
